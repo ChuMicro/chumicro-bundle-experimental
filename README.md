@@ -43,10 +43,10 @@ pip install chumicro-timing-experimental   # example
 
 | Library | Version | Description |
 | --- | --- | --- |
-| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/compat) | 0.1.6 | Cross-runtime compatibility polyfills for CPython, MicroPython, and CircuitPython. |
-| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/msgpack) | 0.1.6 | Cross-runtime [MessagePack](https://msgpack.org) serialization for CircuitPython, MicroPython, and CPython. |
-| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/runner) | 0.1.6 | Tick-based task runner with shared timestamps for Chumicro applications. |
-| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/timing) | 0.1.6 | Cross-runtime millisecond tick helpers and periodic timing utilities. |
+| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/compat) | 0.1.7 | Cross-runtime compatibility polyfills for CPython, MicroPython, and CircuitPython. |
+| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/msgpack) | 0.1.7 | Cross-runtime [MessagePack](https://msgpack.org) serialization for CircuitPython, MicroPython, and CPython. |
+| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/runner) | 0.1.7 | Tick-based task runner with shared timestamps for Chumicro applications. |
+| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/timing) | 0.1.7 | Cross-runtime millisecond tick helpers and periodic timing utilities. |
 
 Each library directory in this repo contains a `package.json` manifest for mip, `.py` source files, and `.mpy` compiled bytecode (CircuitPython 10.x, mpy format v6).
 
