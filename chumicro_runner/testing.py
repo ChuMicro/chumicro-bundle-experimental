@@ -3,14 +3,18 @@
 Provides ``CallRecorder`` — a callable that records handler invocations
 for assertion in host-side tests.
 
-Usage::
+Ships with the library per Decision 0010 so downstream consumers
+import ready-made fakes rather than inventing ad-hoc mocks.
 
+Example:
+    ```python
     from chumicro_runner.testing import CallRecorder
 
     recorder = CallRecorder()
     runner.add_periodic(recorder, period_ms=100)
     # ... advance time, tick() ...
     assert recorder.calls == [100]
+    ```
 """
 
 

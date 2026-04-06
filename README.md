@@ -1,6 +1,6 @@
 # ChuMicro-Bundle-Experimental
 
-> ⚠️ **Pre-release channel** — these builds come from the `develop` branch and may contain breaking changes.
+> ⚠️ **Pre-release channel** — these builds come from the `main` branch and may contain breaking changes.
 
 Experimental distribution bundle for [ChuMicro](https://github.com/ChuMicro/ChuMicro) libraries.  Contains `.py` source, `.mpy` bytecode, and `package.json` manifests for [mip](https://docs.micropython.org/en/latest/reference/packages.html) and [circup](https://github.com/adafruit/circup) installation.
 
@@ -43,10 +43,10 @@ pip install chumicro-timing-experimental   # example
 
 | Library | Version | Description |
 | --- | --- | --- |
-| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/compat) | 0.1.8 | Cross-runtime compatibility polyfills for CPython, MicroPython, and CircuitPython. |
-| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/msgpack) | 0.1.8 | Cross-runtime [MessagePack](https://msgpack.org) serialization for CircuitPython, MicroPython, and CPython. |
-| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/runner) | 0.1.8 | Tick-based task runner with shared timestamps for Chumicro applications. |
-| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/develop/libraries/timing) | 0.1.8 | Cross-runtime millisecond tick helpers and periodic timing utilities. |
+| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/compat) | 0.1.9 | Cross-runtime compatibility polyfills for CircuitPython, MicroPython, and CPython — functools.partial and more. |
+| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/msgpack) | 0.1.9 | Compact MessagePack serialization for CircuitPython, MicroPython, and CPython — delegates to the native C module when available. |
+| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/runner) | 0.1.9 | Tick-based task runner for CircuitPython, MicroPython, and CPython — non-blocking check/handle scheduling without async. |
+| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/timing) | 0.1.9 | Wraparound-safe millisecond tick helpers and heartbeat scheduling for CircuitPython, MicroPython, and CPython. |
 
 Each library directory in this repo contains a `package.json` manifest for mip, `.py` source files, and `.mpy` compiled bytecode (CircuitPython 10.x, mpy format v6).
 
@@ -56,4 +56,4 @@ This repository is **automatically maintained** by the [ChuMicro source repo](ht
 
 - **Source code, docs, and examples:** [ChuMicro/ChuMicro](https://github.com/ChuMicro/ChuMicro)
 - **Stable bundle:** [ChuMicro/ChuMicro-Bundle](https://github.com/ChuMicro/ChuMicro-Bundle)
-- **License:** [MIT](https://github.com/ChuMicro/ChuMicro/blob/develop/LICENSE)
+- **License:** [MIT](https://github.com/ChuMicro/ChuMicro/blob/main/LICENSE)
