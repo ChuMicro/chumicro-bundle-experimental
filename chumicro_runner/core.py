@@ -47,8 +47,11 @@ class _TaskEntry:
         "run_count", "active",
     )
 
-    def __init__(self, check_function, handler_function, period_ms,
-                 next_due_ms, run_count):
+    def __init__(self, check_function: object | None,
+                 handler_function: object,
+                 period_ms: int | None,
+                 next_due_ms: int | None,
+                 run_count: int | None) -> None:
         """Create a task entry.
 
         Args:
@@ -78,27 +81,32 @@ class TaskHandle:
 
     __slots__ = ("_entry", "_runner")
 
-    def __init__(self, entry, runner):
-        """Create a handle wrapping *entry* owned by *runner*."""
+    def __init__(self, entry: _TaskEntry, runner: "Runner") -> None:
+        """Create a handle wrapping *entry* owned by *runner*.
+
+        Args:
+            entry: Internal task record.
+            runner: Owning runner instance.
+        """
         self._entry = entry
         self._runner = runner
 
     @property
-    def period_ms(self):
+    def period_ms(self) -> int | None:
         """Return the task period in milliseconds, or ``None``."""
         return self._entry.period_ms
 
     @property
-    def run_count(self):
+    def run_count(self) -> int | None:
         """Return the remaining run count, or ``None`` if unlimited."""
         return self._entry.run_count
 
     @property
-    def active(self):
+    def active(self) -> bool:
         """Return whether the task is still registered."""
         return self._entry.active
 
-    def set_period(self, period_ms):
+    def set_period(self, period_ms: int | None) -> None:
         """Add, change, or remove the period for this task.
 
         Pass ``None`` to remove an existing period (task runs every tick).
@@ -119,11 +127,11 @@ class TaskHandle:
         else:
             self._entry.next_due_ms = None
 
-    def remove(self):
+    def remove(self) -> None:
         """Remove this task from the runner."""
         self._runner._remove_entry(self._entry)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return a developer-friendly representation."""
         status = "active" if self._entry.active else "removed"
         period = self._entry.period_ms
@@ -170,7 +178,7 @@ class Runner:
 
     __slots__ = ("_entries", "_pending", "_ticks")
 
-    def __init__(self, ticks=None):
+    def __init__(self, ticks: object | None = None) -> None:
         """Create a runner.
 
         Args:
@@ -189,8 +197,11 @@ class Runner:
 
             self._ticks = _ticks_mod
 
-    def add(self, task=None, handler=None, period_ms=None,
-            start_after_ms=None, run_count=None):
+    def add(self, task: object | None = None,
+            handler: object | None = None,
+            period_ms: int | None = None,
+            start_after_ms: int | None = None,
+            run_count: int | None = None) -> TaskHandle:
         """Register a task with the runner.
 
         **Object-based** (task only): *task* must have
@@ -252,8 +263,9 @@ class Runner:
         self._entries.append(entry)
         return TaskHandle(entry, self)
 
-    def add_periodic(self, handler, period_ms, start_after_ms=None,
-                     run_count=None):
+    def add_periodic(self, handler: object, period_ms: int,
+                     start_after_ms: int | None = None,
+                     run_count: int | None = None) -> TaskHandle:
         """Register a periodic handler with no check.
 
         ``handler(now_ms)`` is called every *period_ms* milliseconds.
@@ -284,7 +296,7 @@ class Runner:
         self._entries.append(entry)
         return TaskHandle(entry, self)
 
-    def tick(self):
+    def tick(self) -> int:
         """Capture time, check tasks, then batch-fire handlers.
 
         1. Check each entry (period gate -> check gate).
@@ -293,7 +305,7 @@ class Runner:
         3. Decrement run counts; auto-remove exhausted entries.
 
         Returns:
-            The ``now_ms`` value used this tick.
+            The tick timestamp used this cycle.
         """
         ticks = self._ticks
         now_ms = ticks.ticks_ms()
@@ -302,7 +314,7 @@ class Runner:
         pending = self._pending
 
         for entry in self._entries:
-            if not entry.active:
+            if not entry.active:  # pragma: no cover — safety guard; _remove_entry clears from list
                 continue
 
             # Time gate (period or start delay).
@@ -332,7 +344,7 @@ class Runner:
 
         return now_ms
 
-    def _remove_entry(self, entry):
+    def _remove_entry(self, entry: _TaskEntry) -> None:
         """Remove *entry* from the runner (called by ``TaskHandle``)."""
         entry.active = False
         try:

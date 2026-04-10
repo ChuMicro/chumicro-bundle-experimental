@@ -7,13 +7,9 @@
     [
       "chumicro_runner/core.mpy",
       "github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_runner/core.mpy"
-    ],
-    [
-      "chumicro_runner/testing.mpy",
-      "github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_runner/testing.mpy"
     ]
   ],
-  "version": "0.1.15",
+  "version": "0.1.16",
   "deps": [
     [
       "github:ChuMicro/ChuMicro-Bundle/chumicro_timing",

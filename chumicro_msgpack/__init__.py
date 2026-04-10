@@ -26,19 +26,32 @@ try:
 
     from msgpack import pack, unpack  # noqa: F401
 
-    def packb(obj):
+    def packb(obj: object) -> bytes:  # pragma: no cover — native C path
         """Pack *obj* to msgpack bytes using the native encoder.
 
         Allocates a ``BytesIO`` buffer internally.  For small payloads
         this is fine; for larger data or tight loops, prefer
         ``pack(obj, stream)`` to write directly to a destination.
+
+        Args:
+            obj: Python object to serialize.
+
+        Returns:
+            Msgpack-encoded data.
         """
         buffer = BytesIO()
         pack(obj, buffer)
         return buffer.getvalue()
 
-    def unpackb(data):
-        """Unpack msgpack *data* to a Python object using the native decoder."""
+    def unpackb(data: bytes | bytearray | memoryview) -> object:  # pragma: no cover — native C path
+        """Unpack msgpack *data* to a Python object using the native decoder.
+
+        Args:
+            data: Msgpack-encoded data.
+
+        Returns:
+            Deserialized Python object.
+        """
         return unpack(BytesIO(data))
 
 except ImportError:

@@ -10,8 +10,13 @@ import struct
 # Encoding
 # ---------------------------------------------------------------------------
 
-def _encode(obj, buffer):
-    """Encode *obj* into msgpack format, appending bytes to *buffer*."""
+def _encode(obj: object, buffer: bytearray) -> None:
+    """Encode *obj* into msgpack format, appending bytes to *buffer*.
+
+    Args:
+        obj: Python object to serialize.
+        buffer: Target buffer to append encoded bytes to.
+    """
     if obj is True:
         buffer.append(0xc3)
     elif obj is False:
@@ -35,8 +40,13 @@ def _encode(obj, buffer):
         raise TypeError(f"unsupported type: {type(obj).__name__}")
 
 
-def _encode_int(value, buffer):
-    """Encode an integer value."""
+def _encode_int(value: int, buffer: bytearray) -> None:
+    """Encode an integer value.
+
+    Args:
+        value: Integer to encode.
+        buffer: Target buffer to append encoded bytes to.
+    """
     if 0 <= value <= 0x7f:
         buffer.append(value)
     elif -32 <= value < 0:
@@ -63,8 +73,13 @@ def _encode_int(value, buffer):
         raise OverflowError(f"integer out of range for 32-bit msgpack: {value}")
 
 
-def _encode_str(value, buffer):
-    """Encode a string value."""
+def _encode_str(value: str, buffer: bytearray) -> None:
+    """Encode a string value.
+
+    Args:
+        value: String to encode.
+        buffer: Target buffer to append encoded bytes to.
+    """
     encoded = value.encode("utf-8")
     length = len(encoded)
     if length <= 31:
@@ -80,8 +95,13 @@ def _encode_str(value, buffer):
     buffer.extend(encoded)
 
 
-def _encode_bin(value, buffer):
-    """Encode a bytes or bytearray value."""
+def _encode_bin(value: bytes | bytearray, buffer: bytearray) -> None:
+    """Encode a bytes or bytearray value.
+
+    Args:
+        value: Bytes or bytearray to encode.
+        buffer: Target buffer to append encoded bytes to.
+    """
     length = len(value)
     if length <= 0xff:
         buffer.append(0xc4)
@@ -94,8 +114,13 @@ def _encode_bin(value, buffer):
     buffer.extend(value)
 
 
-def _encode_array(value, buffer):
-    """Encode a list or tuple as a msgpack array."""
+def _encode_array(value: list | tuple, buffer: bytearray) -> None:
+    """Encode a list or tuple as a msgpack array.
+
+    Args:
+        value: List or tuple to encode.
+        buffer: Target buffer to append encoded bytes to.
+    """
     length = len(value)
     if length <= 15:
         buffer.append(0x90 | length)
@@ -108,8 +133,13 @@ def _encode_array(value, buffer):
         _encode(item, buffer)
 
 
-def _encode_map(value, buffer):
-    """Encode a dict as a msgpack map."""
+def _encode_map(value: dict, buffer: bytearray) -> None:
+    """Encode a dict as a msgpack map.
+
+    Args:
+        value: Dict to encode.
+        buffer: Target buffer to append encoded bytes to.
+    """
     length = len(value)
     if length <= 15:
         buffer.append(0x80 | length)
@@ -127,10 +157,15 @@ def _encode_map(value, buffer):
 # Decoding
 # ---------------------------------------------------------------------------
 
-def _decode(data, offset):
+def _decode(data: memoryview, offset: int) -> tuple:
     """Decode one msgpack value from *data* at *offset*.
 
-    Returns ``(value, new_offset)``.
+    Args:
+        data: Memoryview over the msgpack-encoded bytes.
+        offset: Byte position to start decoding from.
+
+    Returns:
+        ``(value, new_offset)`` tuple.
     """
     byte = data[offset]
 
@@ -232,8 +267,17 @@ def _decode(data, offset):
     raise ValueError(f"unsupported msgpack type byte: 0x{byte:02x}")
 
 
-def _decode_array(data, offset, length):
-    """Decode *length* array elements starting at *offset*."""
+def _decode_array(data: memoryview, offset: int, length: int) -> tuple:
+    """Decode *length* array elements starting at *offset*.
+
+    Args:
+        data: Memoryview over the msgpack-encoded bytes.
+        offset: Byte position to start decoding from.
+        length: Number of elements to decode.
+
+    Returns:
+        ``(list, new_offset)`` tuple.
+    """
     result = []
     for _ in range(length):
         value, offset = _decode(data, offset)
@@ -241,8 +285,17 @@ def _decode_array(data, offset, length):
     return result, offset
 
 
-def _decode_map(data, offset, length):
-    """Decode *length* map key-value pairs starting at *offset*."""
+def _decode_map(data: memoryview, offset: int, length: int) -> tuple:
+    """Decode *length* map key-value pairs starting at *offset*.
+
+    Args:
+        data: Memoryview over the msgpack-encoded bytes.
+        offset: Byte position to start decoding from.
+        length: Number of key-value pairs to decode.
+
+    Returns:
+        ``(dict, new_offset)`` tuple.
+    """
     result = {}
     for _ in range(length):
         key, offset = _decode(data, offset)
@@ -255,21 +308,34 @@ def _decode_map(data, offset, length):
 # Public API — bytes-based
 # ---------------------------------------------------------------------------
 
-def packb(obj):
+def packb(obj: object) -> bytes:
     """Pack *obj* to msgpack bytes.
 
     Allocates a temporary ``bytearray`` that grows during encoding,
     then copies to ``bytes``.  For small payloads this is fine; for
     larger data or tight loops, prefer ``pack(obj, stream)`` to write
     directly to a destination without the intermediate allocation.
+
+    Args:
+        obj: Python object to serialize.
+
+    Returns:
+        Msgpack-encoded data.
     """
     buffer = bytearray()
     _encode(obj, buffer)
     return bytes(buffer)
 
 
-def unpackb(data):
-    """Unpack msgpack *data* (bytes, bytearray, or memoryview) to a Python object."""
+def unpackb(data: bytes | bytearray | memoryview) -> object:
+    """Unpack msgpack *data* to a Python object.
+
+    Args:
+        data: Msgpack-encoded data.
+
+    Returns:
+        Deserialized Python object.
+    """
     if not isinstance(data, memoryview):
         data = memoryview(data)
     result, _ = _decode(data, 0)
@@ -283,10 +349,22 @@ def unpackb(data):
 try:
     from msgpack import pack, unpack  # CircuitPython C built-in
 except ImportError:
-    def pack(obj, stream):
-        """Pack *obj* to *stream* in msgpack format."""
+    def pack(obj: object, stream: object) -> None:
+        """Pack *obj* to *stream* in msgpack format.
+
+        Args:
+            obj: Python object to serialize.
+            stream: Writable stream with a ``write()`` method.
+        """
         stream.write(packb(obj))
 
-    def unpack(stream):
-        """Unpack one object from *stream*."""
+    def unpack(stream: object) -> object:
+        """Unpack one object from *stream*.
+
+        Args:
+            stream: Readable stream with a ``read()`` method.
+
+        Returns:
+            Deserialized Python object.
+        """
         return unpackb(stream.read())
