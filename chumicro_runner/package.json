@@ -17,7 +17,7 @@
   "deps": [
     [
       "github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing",
-      "latest"
+      "HEAD"
     ]
   ]
 }
