@@ -1,60 +1,64 @@
 # ChuMicro-Bundle-Experimental
 
-> ⚠️ **Pre-release channel** — these builds come from the `main` branch and may contain breaking changes.
+**Experimental bundle for [ChuMicro](https://github.com/ChuMicro/ChuMicro) — install any library on CircuitPython, MicroPython, or CPython.**
 
-Experimental distribution bundle for [ChuMicro](https://github.com/ChuMicro/ChuMicro) libraries. Contains `.py` source, `.mpy` bytecode, and `package.json` manifests for [mip](https://docs.micropython.org/en/latest/reference/packages.html) and [circup](https://github.com/adafruit/circup) installation.
+> ⚠️ **Pre-release channel** — these builds come from `main` and may contain breaking changes.
 
-📖 **[Documentation, guides, and API reference](https://chumicro.github.io/ChuMicro/)**
+📖 [Docs](https://chumicro.github.io/ChuMicro/) · 📦 [Source](https://github.com/ChuMicro/ChuMicro) · 🧪 [Stable Bundle](https://github.com/ChuMicro/ChuMicro-Bundle)
 
-## Installation
+## Get started
 
-### CircuitPython (circup)
+Swap `chumicro-timing` for whichever library you need.
 
-Remove any other ChuMicro bundle first, then register this one:
+**CircuitPython ([circup](https://github.com/adafruit/circup)):**
+
+[circup](https://github.com/adafruit/circup) is CircuitPython's package manager — it uses bundles to find third-party packages. Register the ChuMicro bundle once, then install any library by name:
 
 ```bash
-circup bundle-remove ChuMicro/ChuMicro-Bundle   # skip if stable was never added
 circup bundle-add ChuMicro/ChuMicro-Bundle-Experimental
-circup install chumicro-timing   # example
+circup install chumicro-timing
 ```
 
-### MicroPython (mip)
+> If you previously registered the stable bundle, remove it first — circup may pick either version when both are active:
+> ```
+> circup bundle-remove ChuMicro/ChuMicro-Bundle
+> ```
 
-Install directly from the bundle repo:
+**MicroPython ([mip](https://docs.micropython.org/en/latest/reference/packages.html)):**
 
 ```bash
-mpremote mip install github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing   # example
+mpremote mip install github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing
 ```
 
-Or on a network-capable board:
+Or from the REPL on a network-capable board:
 
 ```python
 import mip
-mip.install("github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing")   # example
+mip.install("github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing")
 ```
 
-### CPython (pip)
+**CPython (pip):**
 
-CPython users install from PyPI — the bundle repo is not involved:
+On your laptop, install from PyPI — no bundle needed:
 
 ```bash
-pip install chumicro-timing-experimental   # example
+pip install chumicro-timing-experimental
 ```
 
-## Available libraries
+## What's in the bundle?
 
 | Library | Version | Description |
 | --- | --- | --- |
-| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/compat) | 0.1.18 | Cross-runtime compatibility polyfills for CircuitPython, MicroPython, and CPython — functools.partial and more. |
-| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/msgpack) | 0.1.18 | Compact MessagePack serialization for CircuitPython, MicroPython, and CPython — delegates to the native C module when available. |
-| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/runner) | 0.1.18 | Tick-based task runner for CircuitPython, MicroPython, and CPython — non-blocking check/handle scheduling without async. |
-| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/timing) | 0.1.18 | Wraparound-safe millisecond tick helpers and heartbeat scheduling for CircuitPython, MicroPython, and CPython. |
+| [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/compat) | 0.1.19 | Cross-runtime compatibility polyfills for CircuitPython, MicroPython, and CPython — functools.partial and more. |
+| [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/msgpack) | 0.1.19 | Compact MessagePack serialization for CircuitPython, MicroPython, and CPython — delegates to the native C module when available. |
+| [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/runner) | 0.1.19 | Tick-based task runner for CircuitPython, MicroPython, and CPython — non-blocking check/handle scheduling without async. |
+| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/timing) | 0.1.19 | Wraparound-safe millisecond tick helpers and heartbeat scheduling for CircuitPython, MicroPython, and CPython. |
 
-Each library directory in this repo contains a `package.json` manifest for mip, `.py` source files, and `.mpy` compiled bytecode (CircuitPython 10.x, mpy format v6).
+Each directory contains `.py` source, `.mpy` bytecode (CircuitPython 10.x, mpy v6), and a `package.json` manifest for mip.
 
 ## About
 
-This repository is **automatically maintained** by the [ChuMicro source repo](https://github.com/ChuMicro/ChuMicro)'s release workflow. Do not edit it manually.
+This repo is generated automatically by the [ChuMicro release workflow](https://github.com/ChuMicro/ChuMicro/blob/main/.github/workflows/release.yml). Don't edit it by hand — changes will be overwritten on the next release.
 
 - **Source code and examples:** [ChuMicro/ChuMicro](https://github.com/ChuMicro/ChuMicro)
 - **Documentation:** [chumicro.github.io/ChuMicro](https://chumicro.github.io/ChuMicro/)
