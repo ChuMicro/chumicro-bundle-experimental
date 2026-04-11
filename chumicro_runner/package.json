@@ -13,10 +13,10 @@
       "github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_runner/testing.py"
     ]
   ],
-  "version": "0.1.20",
+  "version": "0.1.22",
   "deps": [
     [
-      "github:ChuMicro/ChuMicro-Bundle/chumicro_timing",
+      "github:ChuMicro/ChuMicro-Bundle-Experimental/chumicro_timing",
       "latest"
     ]
   ]
