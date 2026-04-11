@@ -1,10 +1,20 @@
-# ChuMicro-Bundle-Experimental
+<p align="center">
+  <a href="https://github.com/ChuMicro/ChuMicro"><img src="https://raw.githubusercontent.com/ChuMicro/ChuMicro/main/support/docs/chumicro.png" width="420" alt="ChuMicro" /></a>
+</p>
+<h1 align="center">ChuMicro-Bundle-Experimental</h1>
 
-**Experimental bundle for [ChuMicro](https://github.com/ChuMicro/ChuMicro) — install any library on CircuitPython, MicroPython, or CPython.**
+<p align="center">
+  <strong>Experimental bundle for <a href="https://github.com/ChuMicro/ChuMicro">ChuMicro</a> &mdash; install any library on CircuitPython, MicroPython, or CPython.</strong>
+</p>
+
+<p align="center">
+  <a href="https://chumicro.github.io/ChuMicro/">Docs</a> &bull;
+  <a href="https://github.com/ChuMicro/ChuMicro">Source</a> &bull;
+  <a href="https://github.com/ChuMicro/ChuMicro-Bundle">Stable Bundle</a>
+</p>
 
 > ⚠️ **Pre-release channel** — these builds come from `main` and may contain breaking changes.
 
-📖 [Docs](https://chumicro.github.io/ChuMicro/) · 📦 [Source](https://github.com/ChuMicro/ChuMicro) · 🧪 [Stable Bundle](https://github.com/ChuMicro/ChuMicro-Bundle)
 
 ## Get started
 
