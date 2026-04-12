@@ -67,7 +67,7 @@ pip install chumicro-timing-experimental
 | [**chumicro-compat**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/compat) | 0.1.22 | Cross-runtime compatibility polyfills for CircuitPython, MicroPython, and CPython — functools.partial and more. |
 | [**chumicro-msgpack**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/msgpack) | 0.1.22 | Compact MessagePack serialization for CircuitPython, MicroPython, and CPython — delegates to the native C module when available. |
 | [**chumicro-runner**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/runner) | 0.1.22 | Tick-based task runner for CircuitPython, MicroPython, and CPython — non-blocking check/handle scheduling without async. |
-| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/timing) | 0.1.23 | Wraparound-safe millisecond tick helpers and heartbeat scheduling for CircuitPython, MicroPython, and CPython. |
+| [**chumicro-timing**](https://github.com/ChuMicro/ChuMicro/tree/main/libraries/timing) | 0.1.24 | Wraparound-safe millisecond tick helpers and heartbeat scheduling for CircuitPython, MicroPython, and CPython. |
 
 Each root directory contains `.py` source and a `package.json` manifest for mip.  Pre-compiled `.mpy` bytecode is stored in two runtime-specific directories:
 
